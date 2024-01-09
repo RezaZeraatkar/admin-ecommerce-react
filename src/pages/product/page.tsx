@@ -6,7 +6,7 @@ import Paper from '@mui/material/Paper';
 
 export default function Product() {
   return (
-    <Box className='w-full flex flex-col gap-4'>
+    <Box component='form' className='w-full flex flex-col gap-4'>
       <div className='flex flex-col lg:flex-row gap-4 w-full'>
         <Paper className='p-2 w-full'>
           <ProductBasicInformation />

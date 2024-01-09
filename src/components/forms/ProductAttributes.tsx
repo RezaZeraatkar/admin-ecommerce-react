@@ -10,7 +10,7 @@ const checkedIcon = <CheckBoxIcon fontSize='small' />;
 
 export default function ProductAttributes() {
   return (
-    <form className='w-full'>
+    <div className='w-full p-2'>
       <Typography variant='h6' gutterBottom>
         Product attributes
       </Typography>
@@ -91,6 +91,6 @@ export default function ProductAttributes() {
           )}
         />
       </div>
-    </form>
+    </div>
   );
 }
