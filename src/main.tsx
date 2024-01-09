@@ -20,8 +20,8 @@ import '@fontsource/roboto/700.css';
 import RootLayout from '@/pages/layout';
 import Product from '@/pages/product/page';
 import ProductsList from '@/pages/products-list/page';
-import Category from '@/pages/features/page';
-import CategoriesList from '@/pages/features-list/page';
+import Feature from '@/pages/feature/page';
+import FeaturesList from '@/pages/features-list/page';
 
 const cache = createCache({
   key: 'css',
@@ -39,16 +39,16 @@ const router = createBrowserRouter([
         element: <ProductsList />,
       },
       {
-        path: 'products/:action/:pid?',
+        path: 'product/:action/:pid?',
         element: <Product />,
       },
       {
         path: 'features',
-        element: <Category />,
+        element: <FeaturesList />,
       },
       {
-        path: 'features/:action/:fid?',
-        element: <CategoriesList />,
+        path: 'feature/:action/:fid?',
+        element: <Feature />,
       },
     ],
   },
