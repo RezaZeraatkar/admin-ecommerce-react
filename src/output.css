@@ -110,6 +110,14 @@
   height: 300px
 }
 
+#root :is(.h-\[500px\]) {
+  height: 500px
+}
+
+#root :is(.max-h-screen) {
+  max-height: 100vh
+}
+
 #root :is(.min-h-screen) {
   min-height: 100vh
 }
@@ -161,6 +169,20 @@
   padding: 0.5rem
 }
 
+#root :is(.p-4) {
+  padding: 1rem
+}
+
+#root :is(.px-4) {
+  padding-left: 1rem;
+  padding-right: 1rem
+}
+
+#root :is(.py-6) {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem
+}
+
 #root :is(.text-white) {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity))
@@ -168,6 +190,10 @@
 
 #root :is(.no-underline) {
   text-decoration-line: none
+}
+
+#root :is(.filter) {
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)
 }
 
 #root :is(.transition) {

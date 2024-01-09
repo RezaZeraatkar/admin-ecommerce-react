@@ -61,7 +61,7 @@ const columns: GridColDef[] = [
 export default function ProductsList() {
   const productItems = flattenProductsData(products);
   return (
-    <div className='h-[300px] w-full bg-white'>
+    <div className='h-[500px] w-full bg-white p-4'>
       <DataGrid
         rows={productItems}
         columns={columns}

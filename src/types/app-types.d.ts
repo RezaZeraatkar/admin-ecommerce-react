@@ -1,17 +1,20 @@
+type AttributeValue = {
+  id: number;
+  value: string;
+};
+
 type Variant = {
-  color: {
-    id: number;
-    value: string;
-  };
-  size: {
-    id: number;
-    value: string;
-  };
-  sleeves: {
-    id: number;
-    value: string;
-  };
+  color: AttributeValue;
+  size: AttributeValue;
+  sleeves: AttributeValue;
   stock: number | 'Not-Manufactured';
+};
+
+type Attributes = {
+  size: AttributeValue[];
+  colors: AttributeValue[];
+  sleeves: AttributeValue[];
+  models: string[];
 };
 
 type Product = {

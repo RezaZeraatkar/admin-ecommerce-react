@@ -1,24 +1,76 @@
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import Typography from '@mui/material/Typography';
+import {
+  DataGrid,
+  GridColDef,
+  GridRenderCellParams,
+  GridToolbar,
+} from '@mui/x-data-grid';
+// import { useMemo } from 'react';
+import { attributes, products } from '@/data/data';
+import {
+  flattenAttributesData,
+  flattenProductsData,
+} from '@/utils/data-transformations';
+import Button from '@mui/material/Button';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import IconButton from '@mui/material/IconButton';
+import EditIcon from '@mui/icons-material/Edit';
+
+const columns: GridColDef[] = [
+  { field: 'model', headerName: 'Model', width: 150 },
+  { field: 'value', headerName: 'Value', width: 100 },
+  {
+    field: 'actions',
+    headerName: 'Actions',
+    sortable: false,
+    width: 150,
+    renderCell: (params: GridRenderCellParams) => {
+      const onClickEdit = () => {
+        const id = params.row.productId; // Access the product ID here
+        // handle edit action here
+        console.log(id);
+      };
+
+      const onClickDelete = () => {
+        const id = params.row.productId; // Access the product ID here
+        // handle delete action here
+        console.log(id);
+      };
+
+      const onClickView = () => {
+        const id = params.row.productId; // Access the product ID here
+        // handle view action here
+        console.log(id);
+      };
+
+      return (
+        <div>
+          <IconButton onClick={onClickEdit} aria-label='delete'>
+            <EditIcon />
+          </IconButton>
+          <IconButton onClick={onClickDelete} aria-label='delete'>
+            <DeleteForeverIcon />
+          </IconButton>
+          <Button onClick={onClickView}>View</Button>
+        </div>
+      );
+    },
+  },
+];
 
 export default function FeaturesList() {
+  const attributeItems = flattenAttributesData(attributes);
   return (
-    <Box component='form' className='p-2'>
-      <div className='flex gap-4 items-center'>
-        <Typography variant='h6' gutterBottom>
-          Features
-        </Typography>
-      </div>
-      <div className='flex gap-2 w-full'>
-        <TextField
-          label='Feature Name'
-          id='outlined-size-small'
-          defaultValue=''
-          size='small'
-          // className='w-2/3'
-        />
-      </div>
-    </Box>
+    <div className='h-[500px] w-full bg-white p-4'>
+      <DataGrid
+        rows={attributeItems}
+        columns={columns}
+        slots={{ toolbar: GridToolbar }}
+        slotProps={{
+          toolbar: {
+            showQuickFilter: true,
+          },
+        }}
+      />
+    </div>
   );
 }

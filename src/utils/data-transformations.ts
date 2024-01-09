@@ -15,3 +15,19 @@ export const flattenProductsData = (products: Product[]) => {
     }))
   );
 };
+
+export const flattenAttributesData = (attributes: Attributes) => {
+  const rows = Object.keys(attributes)
+    .filter((key) => key !== 'models')
+    .flatMap((key) =>
+      (
+        attributes[key as keyof Omit<Attributes, 'models'>] as AttributeValue[]
+      ).map((attribute: AttributeValue) => ({
+        id: uuidv4(),
+        attributeId: attribute.id,
+        model: key,
+        value: attribute.value,
+      }))
+    );
+  return rows;
+};
