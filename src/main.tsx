@@ -17,11 +17,11 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 
 // layout and pages
-import RootLayout from './pages/layout';
-import Product from './pages/product/page';
-import ProductsList from './pages/products-list/page';
-import Category from './pages/features/page';
-import CategoriesList from './pages/features-list/page';
+import RootLayout from '@/pages/layout';
+import Product from '@/pages/product/page';
+import ProductsList from '@/pages/products-list/page';
+import Category from '@/pages/features/page';
+import CategoriesList from '@/pages/features-list/page';
 
 const cache = createCache({
   key: 'css',

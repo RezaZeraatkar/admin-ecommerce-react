@@ -1,6 +1,7 @@
 import { DataGrid, GridRowsProp, GridColDef } from '@mui/x-data-grid';
 // import { useMemo } from 'react';
-// import { flattenProductsData } from '../../utils/data-transformations';
+// import { flattenProductsData } from '@/utils/data-transformations';
+// import {} from ""
 
 const rows: GridRowsProp = [
   { id: 1, col1: 'Hello', col2: 'World' },
@@ -14,9 +15,7 @@ const columns: GridColDef[] = [
 ];
 
 export default function ProductsList() {
-  // const products = useMemo(() => {
-  //   flattenProductsData(products);
-  // },[]);
+  // const products = flattenProductsData(products);
 
   return (
     <div style={{ height: 300, width: '100%' }}>
