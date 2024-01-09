@@ -6,6 +6,7 @@ export const flattenProductsData = (products: Product[]) => {
       id: uuidv4(), // This is the unique ID for the DataGrid row
       productId: product.id, // This is the product ID
       name: product.name,
+      description: product.description,
       price: product.price,
       color: variant.color.value,
       size: variant.size.value,

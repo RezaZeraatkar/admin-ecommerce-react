@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { styled, useTheme } from '@mui/material/styles';
-import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -84,7 +83,7 @@ export default function RootLayout() {
   };
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <div className='flex bg-gray-50'>
       <AppBar position='fixed' open={open}>
         <Toolbar>
           <IconButton
@@ -139,10 +138,12 @@ export default function RootLayout() {
           ))}
         </List>
       </Drawer>
-      <Main open={open}>
+      <Main open={open} className='w-full'>
         <DrawerHeader />
-        <Outlet />
+        <div className='min-h-screen'>
+          <Outlet />
+        </div>
       </Main>
-    </Box>
+    </div>
   );
 }
