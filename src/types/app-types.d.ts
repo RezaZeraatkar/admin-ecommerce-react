@@ -11,7 +11,7 @@ type Variant = {
     id: number;
     value: string;
   };
-  stock: number | string;
+  stock: number | 'Not-Manufactured';
 };
 
 type Product = {
