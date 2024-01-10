@@ -160,6 +160,16 @@
   padding: 1rem
 }
 
+#root :is(.px-4) {
+  padding-left: 1rem;
+  padding-right: 1rem
+}
+
+#root :is(.py-6) {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem
+}
+
 #root :is(.text-white) {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity))
