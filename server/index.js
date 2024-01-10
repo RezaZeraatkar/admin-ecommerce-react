@@ -22,9 +22,62 @@ app.get('/api/products/:id', async (req, res) => {
   res.json(product);
 });
 
-app.post('/api/products', async (req, res) => {
-  const product = await Product.create(req.body, { include: Variant });
-  res.json(product);
+app.post('/api/products', async (req, res, next) => {
+  try {
+    const {
+      productName,
+      price,
+      productDescription,
+      colors,
+      Size,
+      Sleeves,
+      notManufactured,
+      stockQuantity,
+    } = req.body;
+
+    // Create a new product
+    const product = await Product.create({
+      name: productName,
+      price: price,
+      description: productDescription,
+    });
+
+    // Create associated variants for colors
+    const colorVariants = colors.map((color) => {
+      return Variant.create({
+        colorId: color.id,
+        productId: product.id,
+        stock: stockQuantity,
+      });
+    });
+
+    // Create associated variants for sizes
+    const sizeVariants = Size.map((size) => {
+      return Variant.create({
+        sizeId: size.id,
+        productId: product.id,
+        stock: stockQuantity,
+      });
+    });
+
+    // Create associated variants for sleeves
+    const sleeveVariants = Sleeves.map((sleeve) => {
+      return Variant.create({
+        sleevesId: sleeve.id,
+        productId: product.id,
+        stock: notManufactured ? 0 : stockQuantity,
+      });
+    });
+
+    // Wait for all variants to be created
+    await Promise.all([...colorVariants, ...sizeVariants, ...sleeveVariants]);
+
+    // Send the product with its associated variants
+    const result = await Product.findByPk(product.id, { include: Variant });
+    res.json(result);
+  } catch (err) {
+    next(err);
+  }
 });
 
 app.put('/api/products/:id', async (req, res) => {

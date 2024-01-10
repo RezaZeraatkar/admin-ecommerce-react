@@ -12,6 +12,7 @@ if (!sequelize.isDefined('Variant'))
       sizeId: DataTypes.INTEGER,
       sleevesId: DataTypes.INTEGER,
       stock: DataTypes.INTEGER,
+      productId: DataTypes.INTEGER,
     },
     { sequelize, modelName: 'variant' }
   );
