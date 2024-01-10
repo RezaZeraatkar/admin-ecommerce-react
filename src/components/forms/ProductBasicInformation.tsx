@@ -1,5 +1,5 @@
-import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
+import CTextField from '../inputs/CTextField';
 
 export default function ProductBasicInformation() {
   return (
@@ -9,22 +9,24 @@ export default function ProductBasicInformation() {
       </Typography>
       <div className='flex flex-col gap-4'>
         <div className='flex gap-2 w-full'>
-          <TextField
+          <CTextField
             label='Product Name'
             id='outlined-size-small'
             defaultValue=''
             size='small'
             className='w-2/3'
+            name='productName'
           />
-          <TextField
+          <CTextField
             label='Price'
             id='outlined-size-small'
             defaultValue=''
             size='small'
             className='w-1/3'
+            name='price'
           />
         </div>
-        <TextField
+        <CTextField
           label='Product description'
           id='outlined-size-small'
           defaultValue=''
@@ -32,6 +34,7 @@ export default function ProductBasicInformation() {
           multiline
           rows={4}
           className='w-full'
+          name='productDescription'
         />
       </div>
     </div>

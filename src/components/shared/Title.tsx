@@ -6,7 +6,7 @@ export default function Title({
   ...props
 }: TypographyProps & { children?: ReactNode }) {
   return (
-    <Typography variant='h6' gutterBottom {...props}>
+    <Typography variant='h5' gutterBottom {...props}>
       {children}
     </Typography>
   );
