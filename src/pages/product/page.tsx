@@ -13,7 +13,7 @@ import {
   ProductBasicInformationSchema,
   ProductAttributesSchema,
   ProductInventorySchema,
-} from '@/formSchemas'; // import your schemas
+} from '@/formSchemas';
 
 export default function Product() {
   const schema = z.object({
