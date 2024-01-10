@@ -1,16 +1,15 @@
 import Typography from '@mui/material/Typography';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import CTextField from '@/components/inputs/CTextField';
+import CCheckbox from '../inputs/CCheckBox';
 
 export default function ProductInventory() {
   return (
     <div className='p-2'>
-      <div className='flex gap-4 items-center'>
+      <div className='flex gap-10 items-center'>
         <Typography variant='h6' gutterBottom>
           Inventory
         </Typography>
-        <FormControlLabel control={<Checkbox />} label='Not-Manufactured' />
+        <CCheckbox name='notManufactured' label='Not-Manufactured' />
       </div>
       <div className='flex gap-2 w-full'>
         <CTextField

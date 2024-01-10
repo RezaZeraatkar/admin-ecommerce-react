@@ -17,16 +17,18 @@ const CTextField = React.forwardRef<HTMLInputElement, MyTextFieldProps>(
         name={name}
         control={control}
         defaultValue={defaultValue}
-        render={({ field, fieldState }) => (
-          <TextField
-            {...field}
-            {...props}
-            label={label}
-            error={!!fieldState.error}
-            helperText={fieldState.error?.message}
-            inputRef={ref}
-          />
-        )}
+        render={({ field, formState: { errors } }) => {
+          return (
+            <TextField
+              {...field}
+              {...props}
+              label={label}
+              error={!!errors[name]}
+              helperText={String(errors[name]?.message || '')}
+              inputRef={ref}
+            />
+          );
+        }}
       />
     );
   }

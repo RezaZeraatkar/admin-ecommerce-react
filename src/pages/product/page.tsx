@@ -1,4 +1,6 @@
 import { FormProvider, useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
 import ProductAttributes from '@/components/forms/ProductAttributes';
 import ProductBasicInformation from '@/components/forms/ProductBasicInformation';
 import ProductInventory from '@/components/forms/ProductInventory';
@@ -7,13 +9,28 @@ import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 import { useCallback } from 'react';
+import {
+  ProductBasicInformationSchema,
+  ProductAttributesSchema,
+  ProductInventorySchema,
+} from '@/formSchemas'; // import your schemas
 
 export default function Product() {
-  const methods = useForm();
+  const schema = z.object({
+    ...ProductBasicInformationSchema.shape,
+    ...ProductAttributesSchema.shape,
+    ...ProductInventorySchema.shape,
+  });
 
-  const onSubmit = useCallback((data: Record<string, string>) => {
+  const methods = useForm({
+    resolver: zodResolver(schema),
+  });
+
+  const onSubmit = useCallback((data) => {
     console.log(data);
   }, []);
+
+  // console.log(methods.formState.errors);
 
   return (
     <FormProvider {...methods}>

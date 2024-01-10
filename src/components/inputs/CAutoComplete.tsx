@@ -18,28 +18,31 @@ const CAutoComplete = <OptionType,>({
   ...props
 }: CAutoCompleteProps<OptionType>) => {
   const { control } = useFormContext();
+
   return (
     <Controller
       name={name}
       control={control}
       defaultValue={defaultValue}
-      render={({ field: { onChange, value }, fieldState: { error } }) => (
-        <Autocomplete
-          {...props}
-          value={value}
-          onChange={(_, newValue) => {
-            onChange(newValue);
-          }}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              label={label}
-              error={!!error}
-              helperText={error?.message}
-            />
-          )}
-        />
-      )}
+      render={({ field: { onChange, value }, formState: { errors } }) => {
+        return (
+          <Autocomplete
+            {...props}
+            value={value}
+            onChange={(_, newValue) => {
+              onChange(newValue);
+            }}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label={label}
+                error={!!errors[name]}
+                helperText={String(errors[name]?.message || '')}
+              />
+            )}
+          />
+        );
+      }}
     />
   );
 };

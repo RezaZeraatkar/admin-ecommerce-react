@@ -102,10 +102,6 @@
   position: fixed
 }
 
-#root :is(.m-4) {
-  margin: 1rem
-}
-
 #root :is(.my-4) {
   margin-top: 1rem;
   margin-bottom: 1rem
@@ -117,10 +113,6 @@
 
 #root :is(.h-\[500px\]) {
   height: 500px
-}
-
-#root :is(.h-\[300px\]) {
-  height: 300px
 }
 
 #root :is(.min-h-screen) {
@@ -139,6 +131,10 @@
   width: 100%
 }
 
+#root :is(.transform) {
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))
+}
+
 #root :is(.flex-col) {
   flex-direction: column
 }
@@ -151,16 +147,16 @@
   justify-content: space-between
 }
 
+#root :is(.gap-10) {
+  gap: 2.5rem
+}
+
 #root :is(.gap-2) {
   gap: 0.5rem
 }
 
 #root :is(.gap-4) {
   gap: 1rem
-}
-
-#root :is(.overflow-x-auto) {
-  overflow-x: auto
 }
 
 #root :is(.bg-gray-50) {
@@ -173,16 +169,16 @@
   background-color: rgb(255 255 255 / var(--tw-bg-opacity))
 }
 
+#root :is(.p-1) {
+  padding: 0.25rem
+}
+
 #root :is(.p-2) {
   padding: 0.5rem
 }
 
 #root :is(.p-4) {
   padding: 1rem
-}
-
-#root :is(.p-1) {
-  padding: 0.25rem
 }
 
 #root :is(.px-4) {
