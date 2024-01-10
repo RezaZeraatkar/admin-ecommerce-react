@@ -102,6 +102,15 @@
   position: fixed
 }
 
+#root :is(.m-4) {
+  margin: 1rem
+}
+
+#root :is(.my-4) {
+  margin-top: 1rem;
+  margin-bottom: 1rem
+}
+
 #root :is(.flex) {
   display: flex
 }
@@ -138,12 +147,20 @@
   align-items: center
 }
 
+#root :is(.justify-between) {
+  justify-content: space-between
+}
+
 #root :is(.gap-2) {
   gap: 0.5rem
 }
 
 #root :is(.gap-4) {
   gap: 1rem
+}
+
+#root :is(.overflow-x-auto) {
+  overflow-x: auto
 }
 
 #root :is(.bg-gray-50) {
@@ -162,6 +179,10 @@
 
 #root :is(.p-4) {
   padding: 1rem
+}
+
+#root :is(.p-1) {
+  padding: 0.25rem
 }
 
 #root :is(.px-4) {

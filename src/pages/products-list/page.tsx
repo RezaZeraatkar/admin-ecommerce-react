@@ -11,19 +11,21 @@ import Button from '@mui/material/Button';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import IconButton from '@mui/material/IconButton';
 import EditIcon from '@mui/icons-material/Edit';
+import Title from '@/components/shared/Title';
+import { Link } from 'react-router-dom';
 
 const columns: GridColDef[] = [
-  { field: 'name', headerName: 'Product Name', width: 150 },
+  { field: 'name', headerName: 'Product Name', width: 250 },
   { field: 'price', headerName: 'Price', width: 100 },
   { field: 'color', headerName: 'Color', width: 100 },
   { field: 'size', headerName: 'Size', width: 100 },
-  { field: 'sleeves', headerName: 'Sleeves', width: 100 },
+  { field: 'sleeves', headerName: 'Sleeves', width: 150 },
   { field: 'stock', headerName: 'Stock', width: 100 },
   {
     field: 'actions',
     headerName: 'Actions',
     sortable: false,
-    width: 150,
+    width: 200,
     renderCell: (params: GridRenderCellParams) => {
       const onClickEdit = () => {
         const id = params.row.productId; // Access the product ID here
@@ -62,10 +64,22 @@ export default function ProductsList() {
   const productItems = flattenProductsData(products);
   return (
     <div className='h-[500px] w-full bg-white p-4'>
+      <div className='flex justify-between my-4'>
+        <Title>Products</Title>
+        <Button
+          component={Link}
+          variant='contained'
+          size='small'
+          to='/product/add'
+        >
+          Add new product
+        </Button>
+      </div>
       <DataGrid
         rows={productItems}
         columns={columns}
         slots={{ toolbar: GridToolbar }}
+        className='p-1'
         slotProps={{
           toolbar: {
             showQuickFilter: true,
