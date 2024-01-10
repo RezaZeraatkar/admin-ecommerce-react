@@ -1,13 +1,22 @@
 # React + TypeScript + Vite
 
-## how to run the app:
+## How to run the app:
 
-1. cd into server folder and open two terminal window next to each other and then run the following commands in a row to run the server and seet it with some initial values:
+1. Open a terminal window, navigate to the server folder, and run the following commands in order to install the necessary packages, start the server, and seed it with some initial values:
 
-# npm run start
+```bash
+cd server
+npm i
+npm run start
+npm run seed
+```
 
-# npm run seed
+2. Open another terminal window, navigate to the root folder, and run the following commands to install the necessary packages and start the development server:
 
-then cd into the root folder and run the react app on port 3000:
+```bash
+cd ..
+npm i
+npm run dev
+```
 
-# npm run dev
+3. Now, open your web browser and navigate to http://localhost:3000/ to view the app.
