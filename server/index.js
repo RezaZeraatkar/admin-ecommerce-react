@@ -7,23 +7,27 @@ import sequelize from './db/index.js';
 const app = express();
 const port = 8080;
 
+/** */
+app.use(express.json()); // parses requests of application/json
+app.use(express.urlencoded({ extended: true })); // parses requests of application/x-www-form-urlencode
+
 // CRUD routes for Product model
-app.get('/products', async (req, res) => {
+app.get('/api/products', async (req, res) => {
   const products = await Product.findAll({ include: Variant });
   res.json(products);
 });
 
-app.get('/products/:id', async (req, res) => {
+app.get('/api/products/:id', async (req, res) => {
   const product = await Product.findByPk(req.params.id, { include: Variant });
   res.json(product);
 });
 
-app.post('/products', async (req, res) => {
+app.post('/api/products', async (req, res) => {
   const product = await Product.create(req.body, { include: Variant });
   res.json(product);
 });
 
-app.put('/products/:id', async (req, res) => {
+app.put('/api/products/:id', async (req, res) => {
   const product = await Product.findByPk(req.params.id);
   if (product) {
     await product.update(req.body);
@@ -33,7 +37,7 @@ app.put('/products/:id', async (req, res) => {
   }
 });
 
-app.delete('/products/:id', async (req, res) => {
+app.delete('/api/products/:id', async (req, res) => {
   const product = await Product.findByPk(req.params.id);
   if (product) {
     await product.destroy();
@@ -44,12 +48,12 @@ app.delete('/products/:id', async (req, res) => {
 });
 
 // CRUD routes for Attribute model
-app.get('/attributes', async (req, res) => {
+app.get('/api/attributes', async (req, res) => {
   const attributes = await Attribute.findAll();
   res.json(attributes);
 });
 
-app.get('/attributes/:id', async (req, res) => {
+app.get('/api/attributes/:id', async (req, res) => {
   const attribute = await Attribute.findByPk(req.params.id);
   if (attribute) {
     res.json(attribute);
@@ -58,12 +62,12 @@ app.get('/attributes/:id', async (req, res) => {
   }
 });
 
-app.post('/attributes', async (req, res) => {
+app.post('/api/attributes', async (req, res) => {
   const attribute = await Attribute.create(req.body);
   res.json(attribute);
 });
 
-app.put('/attributes/:id', async (req, res) => {
+app.put('/api/attributes/:id', async (req, res) => {
   const attribute = await Attribute.findByPk(req.params.id);
   if (attribute) {
     await attribute.update(req.body);
@@ -73,7 +77,7 @@ app.put('/attributes/:id', async (req, res) => {
   }
 });
 
-app.delete('/attributes/:id', async (req, res) => {
+app.delete('/api/attributes/:id', async (req, res) => {
   const attribute = await Attribute.findByPk(req.params.id);
   if (attribute) {
     await attribute.destroy();
