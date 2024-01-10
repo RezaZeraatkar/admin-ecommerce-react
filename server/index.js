@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 import Product from './models/products.js';
 import Variant from './models/variants.js';
 import Attribute from './models/attributes.js';
@@ -6,6 +7,12 @@ import sequelize from './db/index.js';
 
 const app = express();
 const port = 8080;
+
+app.use(
+  cors({
+    origin: '*',
+  })
+);
 
 /** */
 app.use(express.json()); // parses requests of application/json
