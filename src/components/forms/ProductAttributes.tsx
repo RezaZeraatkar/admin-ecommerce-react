@@ -1,9 +1,9 @@
 import { attributes } from '@/data/data';
-import { Autocomplete, TextField } from '@mui/material';
 import Checkbox from '@mui/material/Checkbox';
 import Typography from '@mui/material/Typography';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
+import CAutoComplete from '@/components/inputs/CAutoComplete';
 
 const icon = <CheckBoxOutlineBlankIcon fontSize='small' />;
 const checkedIcon = <CheckBoxIcon fontSize='small' />;
@@ -15,14 +15,18 @@ export default function ProductAttributes() {
         Product attributes
       </Typography>
       <div className='gap-4 flex flex-col w-full'>
-        <Autocomplete
+        <CAutoComplete
+          defaultValue={[]}
           className='w-full'
           multiple
           size='small'
           id='checkboxes-tags-demo'
           options={attributes.colors}
           disableCloseOnSelect
-          getOptionLabel={(option) => option.value}
+          isOptionEqualToValue={(option, value) => option.value === value.value}
+          getOptionLabel={(option) =>
+            typeof option === 'string' ? option : option.value
+          }
           renderOption={(props, option, { selected }) => (
             <li {...props}>
               <Checkbox
@@ -34,18 +38,21 @@ export default function ProductAttributes() {
               {option.value}
             </li>
           )}
-          renderInput={(params) => (
-            <TextField {...params} label='Colors' placeholder='Colors' />
-          )}
+          name='colors'
+          label='Colors'
         />
-        <Autocomplete
+        <CAutoComplete
+          defaultValue={[]}
           className='w-full'
           size='small'
           multiple
           id='checkboxes-tags-demo'
           options={attributes.size}
+          isOptionEqualToValue={(option, value) => option.value === value.value}
           disableCloseOnSelect
-          getOptionLabel={(option) => option.value}
+          getOptionLabel={(option) =>
+            typeof option === 'string' ? option : option.value
+          }
           renderOption={(props, option, { selected }) => (
             <li {...props}>
               <Checkbox
@@ -57,18 +64,21 @@ export default function ProductAttributes() {
               {option.value}
             </li>
           )}
-          renderInput={(params) => (
-            <TextField {...params} label='Size' placeholder='Size' />
-          )}
+          name='Size'
+          label='Size'
         />
-        <Autocomplete
+        <CAutoComplete
+          defaultValue={[]}
           className='w-full'
           size='small'
           multiple
           id='checkboxes-tags-demo'
           options={attributes.sleeves}
           disableCloseOnSelect
-          getOptionLabel={(option) => option.value}
+          isOptionEqualToValue={(option, value) => option.value === value.value}
+          getOptionLabel={(option) =>
+            typeof option === 'string' ? option : option.value
+          }
           renderOption={(props, option, { selected }) => (
             <li {...props}>
               <Checkbox
@@ -81,14 +91,8 @@ export default function ProductAttributes() {
               {option.value}
             </li>
           )}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              label='Sleeves'
-              placeholder='Sleeves'
-              size='small'
-            />
-          )}
+          name='Sleeves'
+          label='Sleeves'
         />
       </div>
     </div>

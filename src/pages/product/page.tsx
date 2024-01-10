@@ -9,7 +9,7 @@ import Button from '@mui/material/Button';
 import { useCallback } from 'react';
 
 export default function Product() {
-  const methods = useForm(); // initialize useForm
+  const methods = useForm();
 
   const onSubmit = useCallback((data: Record<string, string>) => {
     console.log(data);
@@ -17,8 +17,6 @@ export default function Product() {
 
   return (
     <FormProvider {...methods}>
-      {' '}
-      {/* wrap the form with FormProvider */}
       <Box
         component='form'
         className='w-full flex flex-col gap-4'
