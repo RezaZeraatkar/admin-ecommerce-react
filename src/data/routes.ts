@@ -12,7 +12,7 @@ export const routes = [
   },
   {
     title: 'product',
-    address: '/products/add',
+    address: '/product/add',
     icon: React.createElement(MailIcon),
     roles: [],
     permissions: [],
@@ -26,7 +26,7 @@ export const routes = [
   },
   {
     title: 'feature',
-    address: '/features/add',
+    address: '/feature/add',
     icon: React.createElement(MailIcon),
     roles: [],
     permissions: [],

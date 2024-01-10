@@ -59,11 +59,11 @@ const columns: GridColDef[] = [
 ];
 
 export default function ProductsList() {
-  const rows = flattenProductsData(products);
+  const productItems = flattenProductsData(products);
   return (
-    <div className='h-[300px] w-full'>
+    <div className='h-[500px] w-full bg-white p-4'>
       <DataGrid
-        rows={rows}
+        rows={productItems}
         columns={columns}
         slots={{ toolbar: GridToolbar }}
         slotProps={{

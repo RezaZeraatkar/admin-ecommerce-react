@@ -3,6 +3,7 @@ export const products = [
     id: 1,
     name: 'T-Shirt',
     price: '20$',
+    description: 'lorem ipsum ...',
     variants: [
       {
         color: {
@@ -40,6 +41,7 @@ export const products = [
     id: 2,
     name: 'Hoodie',
     price: '50$',
+    description: 'lorem ipsum ...',
     variants: [
       {
         color: {
