@@ -7,6 +7,9 @@ import createCache from '@emotion/cache';
 // router dom
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
+// tailwind gloabls
+import '@/globals.css';
+
 // css baseline
 import CssBaseline from '@mui/material/CssBaseline';
 
