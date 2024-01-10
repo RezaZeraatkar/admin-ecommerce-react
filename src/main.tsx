@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { StyledEngineProvider } from '@mui/material/styles';
 import { CacheProvider } from '@emotion/react';
 import createCache from '@emotion/cache';
+import { Provider } from 'react-redux';
 
 // router dom
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
@@ -25,6 +26,7 @@ import Product from '@/pages/product/page';
 import ProductsList from '@/pages/products-list/page';
 import Feature from '@/pages/feature/page';
 import FeaturesList from '@/pages/features-list/page';
+import store from '@/store';
 
 const cache = createCache({
   key: 'css',
@@ -60,10 +62,12 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <CssBaseline />
-    <StyledEngineProvider injectFirst>
-      <CacheProvider value={cache}>
-        <RouterProvider router={router} />
-      </CacheProvider>
-    </StyledEngineProvider>
+    <Provider store={store}>
+      <StyledEngineProvider injectFirst>
+        <CacheProvider value={cache}>
+          <RouterProvider router={router} />
+        </CacheProvider>
+      </StyledEngineProvider>
+    </Provider>
   </React.StrictMode>
 );

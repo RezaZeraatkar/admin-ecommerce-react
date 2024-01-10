@@ -1,19 +1,23 @@
+import { Suspense, lazy, useCallback } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import ProductAttributes from '@/components/forms/ProductAttributes';
 import ProductBasicInformation from '@/components/forms/ProductBasicInformation';
 import ProductInventory from '@/components/forms/ProductInventory';
 import Title from '@/components/shared/Title';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
-import { useCallback } from 'react';
 import {
   ProductBasicInformationSchema,
   ProductAttributesSchema,
   ProductInventorySchema,
 } from '@/formSchemas';
+import DefaultSkeleton from '@/components/shared/DefaultSkeleton';
+
+const ProductAttributes = lazy(
+  () => import('@/components/forms/ProductAttributes')
+);
 
 export default function Product() {
   const schema = z.object({
@@ -50,7 +54,9 @@ export default function Product() {
             <ProductBasicInformation />
           </Paper>
           <Paper className='p-2 md:[650px] lg:w-[550px]'>
-            <ProductAttributes />
+            <Suspense fallback={<DefaultSkeleton />}>
+              <ProductAttributes />
+            </Suspense>
           </Paper>
         </div>
         <Paper className='p-2 md:[650px] lg:w-[550px]'>

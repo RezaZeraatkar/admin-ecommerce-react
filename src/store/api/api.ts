@@ -4,7 +4,7 @@ export const AppApi = createApi({
   reducerPath: 'AppApi',
   tagTypes: ['Product', 'Attribute'],
   baseQuery: fetchBaseQuery({
-    baseUrl: `${process.env.REACT_APP_API_BASE_URL}/api`,
+    baseUrl: `http://localhost:8080/api/`,
     // prepareHeaders: (headers, { getState }) => {
     //   const token = localStorage.getItem('accessToken');
     //   if (token) {
@@ -46,8 +46,26 @@ export const AppApi = createApi({
       invalidatesTags: ['Product'],
     }),
     getAllAttributes: builder.query({
-      query: () => 'attributes',
+      query: () => ({
+        url: `attributes`,
+        method: 'GET',
+      }),
       providesTags: ['Attribute'],
+      transformResponse: (response) => {
+        const transformed = response.reduce((acc, attribute) => {
+          if (!acc[attribute.type]) {
+            acc[attribute.type] = [];
+          }
+          acc[attribute.type].push({
+            id: attribute.id,
+            value: attribute.value,
+          });
+          return acc;
+        }, {});
+
+        transformed.models = Object.keys(transformed);
+        return transformed as Attributes;
+      },
     }),
     getAttributeById: builder.query({
       query: (id) => `attributes/${id}`,

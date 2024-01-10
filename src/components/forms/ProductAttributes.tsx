@@ -1,14 +1,37 @@
-import { attributes } from '@/data/data';
+// import { attributes } from '@/data/data';
 import Checkbox from '@mui/material/Checkbox';
 import Typography from '@mui/material/Typography';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import CAutoComplete from '@/components/inputs/CAutoComplete';
+import { useGetAllAttributesQuery } from '@/store/api/api';
+import { useEffect } from 'react';
 
 const icon = <CheckBoxOutlineBlankIcon fontSize='small' />;
 const checkedIcon = <CheckBoxIcon fontSize='small' />;
 
 export default function ProductAttributes() {
+  const {
+    data: attributes,
+    // isLoading,
+    // isFetching,
+    isSuccess,
+    isError,
+    error,
+  } = useGetAllAttributesQuery({});
+
+  useEffect(() => {
+    if (isSuccess) {
+      console.log(attributes);
+    }
+  }, [isSuccess, attributes]);
+
+  useEffect(() => {
+    if (isError) {
+      console.log(error);
+    }
+  }, [isError, error]);
+
   return (
     <div className='w-full p-2'>
       <Typography variant='h6' gutterBottom>
@@ -21,7 +44,7 @@ export default function ProductAttributes() {
           multiple
           size='small'
           id='checkboxes-tags-demo'
-          options={attributes.colors}
+          options={attributes?.colors || []}
           disableCloseOnSelect
           isOptionEqualToValue={(option, value) => option.value === value.value}
           getOptionLabel={(option) =>
@@ -47,7 +70,7 @@ export default function ProductAttributes() {
           size='small'
           multiple
           id='checkboxes-tags-demo'
-          options={attributes.size}
+          options={attributes?.size || []}
           isOptionEqualToValue={(option, value) => option.value === value.value}
           disableCloseOnSelect
           getOptionLabel={(option) =>
@@ -73,7 +96,7 @@ export default function ProductAttributes() {
           size='small'
           multiple
           id='checkboxes-tags-demo'
-          options={attributes.sleeves}
+          options={attributes?.sleeves || []}
           disableCloseOnSelect
           isOptionEqualToValue={(option, value) => option.value === value.value}
           getOptionLabel={(option) =>
