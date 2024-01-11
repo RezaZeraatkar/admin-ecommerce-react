@@ -7,11 +7,15 @@ import React from 'react';
 type MyCheckboxProps = CheckboxProps & {
   name: string;
   label: string;
+  handleCheckboxChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   defaultValue?: boolean;
 };
 
 const CCheckbox = React.forwardRef<HTMLInputElement, MyCheckboxProps>(
-  ({ name, label, defaultValue = false, ...props }, ref) => {
+  (
+    { name, label, defaultValue = false, handleCheckboxChange, ...props },
+    ref
+  ) => {
     const {
       control,
       formState: { errors },
@@ -24,9 +28,19 @@ const CCheckbox = React.forwardRef<HTMLInputElement, MyCheckboxProps>(
           name={name}
           control={control}
           defaultValue={defaultValue}
-          render={({ field }) => (
+          render={({ field: { onChange } }) => (
             <FormControlLabel
-              control={<Checkbox {...field} {...props} inputRef={ref} />}
+              control={
+                <Checkbox
+                  onChange={(e) => {
+                    handleCheckboxChange && handleCheckboxChange(e);
+                    onChange(e.target.checked);
+                  }}
+                  // {...field}
+                  {...props}
+                  inputRef={ref}
+                />
+              }
               label={label}
             />
           )}

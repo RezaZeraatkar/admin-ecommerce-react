@@ -110,6 +110,7 @@ app.put('/api/products/:id', async (req, res, next) => {
         stock: -1,
       };
     }
+    console.log(editedProduct);
     const product = await Product.findByPk(req.params.id);
     if (product) {
       await product.update(editedProduct);

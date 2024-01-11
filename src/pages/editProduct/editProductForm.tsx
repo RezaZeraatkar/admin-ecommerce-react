@@ -56,7 +56,7 @@ export default function EditProductForm({ product }: { product: Product }) {
         // @ts-expect-error product response interface which extends Product needs to be created
         value: product?.sleevesTitle,
       },
-      notManufactured: true,
+      notManufactured: typeof product.stock === 'number' && product.stock < 0,
     },
     resolver: zodResolver(schema),
   });
