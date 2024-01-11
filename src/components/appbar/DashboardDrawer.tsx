@@ -12,7 +12,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 
 // routes
-import { routes } from '@/data/routes';
+import { routes } from '@/config/routes';
 import { StyledComponent } from '@emotion/styled';
 import { Theme } from '@mui/material';
 import { MUIStyledCommonProps } from '@mui/system';
