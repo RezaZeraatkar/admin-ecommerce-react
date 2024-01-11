@@ -7,15 +7,16 @@ import ProductInventory from '@/components/forms/ProductInventory';
 import Title from '@/components/shared/Title';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
-import Button from '@mui/material/Button';
 import {
   ProductBasicInformationSchema,
   ProductAttributesSchema,
   ProductInventorySchema,
 } from '@/formSchemas';
 import DefaultSkeleton from '@/components/shared/DefaultSkeleton';
-import { useCreateProductMutation } from '@/store/api/api';
-import CircularProgress from '@mui/material/CircularProgress';
+import { useUpdateProductMutation } from '@/store/api/api';
+import Button from '@mui/material/Button';
+import { useNavigate, useParams } from 'react-router';
+import { toast } from 'react-toastify';
 
 const ProductAttributes = lazy(
   () => import('@/components/forms/ProductAttributes')
@@ -28,12 +29,14 @@ const schema = z.object({
 });
 
 export default function EditProductForm({ product }: { product: Product }) {
+  const { id } = useParams();
+  const navigate = useNavigate();
   const methods = useForm<Product>({
     defaultValues: {
       name: product?.name,
       description: product?.description,
-      price: product?.price,
-      stock: product?.stock,
+      price: String(product?.price),
+      stock: String(product?.stock),
       color: {
         id: product?.colorId,
         value: product?.colorTitle,
@@ -42,24 +45,32 @@ export default function EditProductForm({ product }: { product: Product }) {
     resolver: zodResolver(schema),
   });
 
-  const [createProduct, { isLoading }] = useCreateProductMutation();
+  const [updateProduct, { isLoading }] = useUpdateProductMutation();
 
   const onSubmit = useCallback(
     async (data: Product) => {
+      console.log(data);
       const product = {
         ...data,
+        id: id,
         color: data.color.id,
         size: data.size.id,
         sleeves: data.sleeves.id,
       };
       try {
-        const productRes = await createProduct(product).unwrap();
+        const productRes = await updateProduct(product).unwrap();
         console.log(productRes);
+        // navigate to product list page
+        navigate('/products');
       } catch (error) {
         console.error(error);
+        // @ts-expect-error error data structure is unkown
+        toast.error(error?.data?.message || error?.error, {
+          position: 'top-right',
+        });
       }
     },
-    [createProduct]
+    [updateProduct, id, navigate]
   );
 
   return (
@@ -74,10 +85,12 @@ export default function EditProductForm({ product }: { product: Product }) {
           <Button
             disabled={isLoading}
             type='submit'
-            variant='contained'
             size='small'
+            variant='contained'
+            aria-label='edit product'
+            className='disabled:bg-slate-400'
           >
-            {isLoading ? <CircularProgress size='small' /> : `Edit product`}
+            Edit product
           </Button>
         </div>
         <div className='flex flex-col lg:flex-row gap-4 w-full'>

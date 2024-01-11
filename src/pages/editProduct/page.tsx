@@ -1,8 +1,12 @@
 import { useGetProductByIdQuery } from '@/store/api/api';
 import { useParams } from 'react-router-dom';
-import EditProductForm from './form';
 import CircularProgress from '@mui/material/CircularProgress';
-import { useEffect } from 'react';
+import { Suspense, lazy, useEffect } from 'react';
+import DefaultSkeleton from '@/components/shared/DefaultSkeleton';
+
+const EditProductForm = lazy(
+  () => import('@/pages/editProduct/editProductForm')
+);
 
 export default function EditProduct() {
   const { id } = useParams();
@@ -17,19 +21,22 @@ export default function EditProduct() {
   } = useGetProductByIdQuery(id);
 
   useEffect(() => {
-    if (productSuccess) {
-      console.log(product);
-    }
-  }, [productSuccess, product]);
-
-  useEffect(() => {
     if (ProductIsError) {
       console.log(productError);
+      // @ts-expect-error error data structure is unkown
+      toast.error(productError?.data?.message || productError?.error, {
+        position: 'top-right',
+      });
     }
   }, [ProductIsError, productError]);
 
-  if (productLoading || productIsFetching) return <CircularProgress />;
+  if (productLoading || productIsFetching) return <DefaultSkeleton />;
 
-  if (productSuccess) return <EditProductForm product={product} />;
-  else <>No Product Found</>;
+  if (productSuccess)
+    return (
+      <Suspense fallback={<DefaultSkeleton />}>
+        <EditProductForm product={product} />
+      </Suspense>
+    );
+  else <>Sorry! No Product Found</>;
 }

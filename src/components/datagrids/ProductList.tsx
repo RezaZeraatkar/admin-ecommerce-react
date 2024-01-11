@@ -36,13 +36,6 @@ export default function ProductListDataGrid() {
     setRemovedItemId(id);
   }, []);
 
-  // handling successes here
-  useEffect(() => {
-    if (isSuccess) {
-      console.log(products);
-    }
-  }, [isSuccess, products]);
-
   // handline errors here
   useEffect(() => {
     if (isError) {
@@ -67,6 +60,7 @@ export default function ProductListDataGrid() {
       toast.success(deletedItem.message, { position: 'top-right' });
     } catch (error) {
       console.error(error);
+      // @ts-expect-error error data structure is unkown
       toast.error(error?.data?.message || error?.error, {
         position: 'top-right',
       });

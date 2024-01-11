@@ -6,6 +6,7 @@ import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import CAutoComplete from '@/components/inputs/CAutoComplete';
 import { useGetAllAttributesQuery } from '@/store/api/api';
 import { useEffect } from 'react';
+import DefaultSkeleton from '../shared/DefaultSkeleton';
 
 const icon = <CheckBoxOutlineBlankIcon fontSize='small' />;
 const checkedIcon = <CheckBoxIcon fontSize='small' />;
@@ -32,7 +33,7 @@ export default function ProductAttributes() {
     }
   }, [isError, error]);
 
-  if (isLoading || isFetching) return <>loading...</>;
+  if (isLoading || isFetching) return <DefaultSkeleton />;
 
   if (isSuccess)
     return (
