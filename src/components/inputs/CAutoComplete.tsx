@@ -8,7 +8,7 @@ interface CAutoCompleteProps<OptionType>
   > {
   name: string;
   label: string;
-  defaultValue: OptionType[];
+  defaultValue?: OptionType[];
 }
 
 const CAutoComplete = <OptionType,>({

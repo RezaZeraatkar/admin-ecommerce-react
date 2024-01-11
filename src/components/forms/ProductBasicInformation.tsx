@@ -12,7 +12,6 @@ export default function ProductBasicInformation() {
           <CTextField
             label='Product Name'
             id='outlined-size-small'
-            defaultValue={''}
             size='small'
             className='w-2/3'
             name='name'
@@ -20,7 +19,6 @@ export default function ProductBasicInformation() {
           <CTextField
             label='Price'
             id='outlined-size-small'
-            defaultValue={''}
             size='small'
             className='w-1/3'
             name='price'
@@ -29,7 +27,6 @@ export default function ProductBasicInformation() {
         <CTextField
           label='Product description'
           id='outlined-size-small'
-          defaultValue={''}
           size='small'
           multiline
           rows={4}

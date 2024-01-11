@@ -1,4 +1,4 @@
-import { Suspense, lazy, useCallback, useEffect } from 'react';
+import { Suspense, lazy, useCallback } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -14,12 +14,9 @@ import {
   ProductInventorySchema,
 } from '@/formSchemas';
 import DefaultSkeleton from '@/components/shared/DefaultSkeleton';
-import {
-  useCreateProductMutation,
-  useGetProductByIdQuery,
-} from '@/store/api/api';
-import CircularProgress from '@mui/material/CircularProgress';
+import { useCreateProductMutation } from '@/store/api/api';
 import { useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const ProductAttributes = lazy(
   () => import('@/components/forms/ProductAttributes')
@@ -35,17 +32,28 @@ export default function Product() {
   const { pid } = useParams();
 
   const methods = useForm<Product>({
+    defaultValues: {
+      name: '',
+      description: '',
+      price: '',
+      // @ts-expect-error stock type needs to be changed
+      stock: '',
+      color: {
+        id: 1,
+        value: '',
+      },
+      size: {
+        id: 1,
+        value: '',
+      },
+      sleeves: {
+        id: 1,
+        value: '',
+      },
+      notManufactured: false,
+    },
     resolver: zodResolver(schema),
   });
-
-  const {
-    data: product,
-    isSuccess: productSuccess,
-    isLoading: productLoading,
-    isError: ProductIsError,
-    error: productError,
-    isFetching: productIsFetching,
-  } = useGetProductByIdQuery(pid);
 
   const [createProduct, { isLoading }] = useCreateProductMutation();
 
@@ -58,28 +66,18 @@ export default function Product() {
         sleeves: data.sleeves.id,
       };
       try {
-        const productRes = await createProduct(product).unwrap();
-        console.log(productRes);
+        await createProduct(product).unwrap();
+        methods.reset();
       } catch (error) {
         console.error(error);
+        // @ts-expect-error error data structure is unkown
+        toast.error(error?.data?.message || error?.error, {
+          position: 'top-right',
+        });
       }
     },
-    [createProduct]
+    [createProduct, methods]
   );
-
-  useEffect(() => {
-    if (productSuccess) {
-      console.log(product);
-    }
-  }, [productSuccess, product]);
-
-  useEffect(() => {
-    if (ProductIsError) {
-      console.log(productError);
-    }
-  }, [ProductIsError, productError]);
-
-  if (productLoading || productIsFetching) return <>loading...</>;
 
   return (
     <FormProvider {...methods}>
@@ -91,16 +89,14 @@ export default function Product() {
         <div className='flex justify-between items-center'>
           <Title>{pid ? 'Edit' : 'Add'} Product</Title>
           <Button
-            disabled={isLoading}
+            disabled={!methods.formState.isDirty || isLoading}
             type='submit'
-            variant='contained'
             size='small'
+            variant='contained'
+            aria-label='edit product'
+            className='disabled:bg-slate-400'
           >
-            {isLoading ? (
-              <CircularProgress size='small' />
-            ) : (
-              `${pid ? 'Edit' : 'Add'} product`
-            )}
+            Add product
           </Button>
         </div>
         <div className='flex flex-col lg:flex-row gap-4 w-full'>
@@ -109,7 +105,7 @@ export default function Product() {
           </Paper>
           <Paper className='p-2 md:[650px] lg:w-[550px]'>
             <Suspense fallback={<DefaultSkeleton />}>
-              <ProductAttributes product={product} />
+              <ProductAttributes />
             </Suspense>
           </Paper>
         </div>

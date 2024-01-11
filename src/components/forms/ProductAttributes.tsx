@@ -42,88 +42,94 @@ export default function ProductAttributes() {
           Product attributes
         </Typography>
         <div className='gap-4 flex flex-col w-full'>
-          <CAutoComplete
-            defaultValue={attributes?.color[0]}
-            className='w-full'
-            size='small'
-            id='checkboxes-tags-demo'
-            options={attributes?.color || []}
-            disableCloseOnSelect
-            isOptionEqualToValue={(option, value) =>
-              option.value === value.value
-            }
-            getOptionLabel={(option) =>
-              typeof option === 'string' ? option : option.value
-            }
-            renderOption={(props, option, { selected }) => (
-              <li {...props}>
-                <Checkbox
-                  icon={icon}
-                  checkedIcon={checkedIcon}
-                  style={{ marginRight: 8 }}
-                  checked={selected}
-                />
-                {option.value}
-              </li>
-            )}
-            name='color'
-            label='Color'
-          />
-          <CAutoComplete
-            defaultValue={attributes?.size[0]}
-            className='w-full'
-            size='small'
-            id='checkboxes-tags-demo'
-            options={attributes?.size || []}
-            isOptionEqualToValue={(option, value) =>
-              option.value === value.value
-            }
-            disableCloseOnSelect
-            getOptionLabel={(option) =>
-              typeof option === 'string' ? option : option.value
-            }
-            renderOption={(props, option, { selected }) => (
-              <li {...props}>
-                <Checkbox
-                  icon={icon}
-                  checkedIcon={checkedIcon}
-                  style={{ marginRight: 8 }}
-                  checked={selected}
-                />
-                {option.value}
-              </li>
-            )}
-            name='size'
-            label='Size'
-          />
-          <CAutoComplete
-            defaultValue={attributes?.sleeves[0]}
-            className='w-full'
-            size='small'
-            id='checkboxes-tags-demo'
-            options={attributes?.sleeves || []}
-            disableCloseOnSelect
-            isOptionEqualToValue={(option, value) =>
-              option.value === value.value
-            }
-            getOptionLabel={(option) =>
-              typeof option === 'string' ? option : option.value
-            }
-            renderOption={(props, option, { selected }) => (
-              <li {...props}>
-                <Checkbox
-                  icon={icon}
-                  checkedIcon={checkedIcon}
-                  style={{ marginRight: 8 }}
-                  checked={selected}
-                  size='small'
-                />
-                {option.value}
-              </li>
-            )}
-            name='sleeves'
-            label='Sleeves'
-          />
+          {attributes?.color && (
+            <CAutoComplete
+              className='w-full'
+              size='small'
+              id='checkboxes-tags-demo'
+              options={attributes?.color || []}
+              disableCloseOnSelect
+              isOptionEqualToValue={(option, defaultValue) =>
+                option.id === (defaultValue.id || 1) &&
+                (option.value === defaultValue.value || '')
+              }
+              getOptionLabel={(option) =>
+                typeof option === 'string' ? option : option.value
+              }
+              renderOption={(props, option, { selected }) => (
+                <li {...props}>
+                  <Checkbox
+                    icon={icon}
+                    checkedIcon={checkedIcon}
+                    style={{ marginRight: 8 }}
+                    checked={selected}
+                  />
+                  {option.value}
+                </li>
+              )}
+              name='color'
+              label='Color'
+            />
+          )}
+          {attributes?.size && (
+            <CAutoComplete
+              className='w-full'
+              size='small'
+              id='checkboxes-tags-demo'
+              options={attributes?.size || []}
+              isOptionEqualToValue={(option, defaultValue) =>
+                option.id === (defaultValue.id || 1) &&
+                (option.value === defaultValue.value || '')
+              }
+              disableCloseOnSelect
+              getOptionLabel={(option) =>
+                typeof option === 'string' ? option : option.value
+              }
+              renderOption={(props, option, { selected }) => (
+                <li {...props}>
+                  <Checkbox
+                    icon={icon}
+                    checkedIcon={checkedIcon}
+                    style={{ marginRight: 8 }}
+                    checked={selected}
+                  />
+                  {option.value}
+                </li>
+              )}
+              name='size'
+              label='Size'
+            />
+          )}
+          {attributes?.sleeves && (
+            <CAutoComplete
+              className='w-full'
+              size='small'
+              id='checkboxes-tags-demo'
+              options={attributes?.sleeves || []}
+              disableCloseOnSelect
+              isOptionEqualToValue={(option, defaultValue) =>
+                option.id === (defaultValue.id || 1) &&
+                (option.value === defaultValue.value || '')
+              }
+              getOptionLabel={(option) =>
+                typeof option === 'string' ? option : option.value
+              }
+              renderOption={(props, option, { selected }) => (
+                <li {...props}>
+                  <Checkbox
+                    icon={icon}
+                    checkedIcon={checkedIcon}
+                    style={{ marginRight: 8 }}
+                    checked={selected}
+                    size='small'
+                  />
+                  {option.value}
+                </li>
+              )}
+              name='sleeves'
+              label='Sleeves'
+            />
+          )}
         </div>
       </div>
     );

@@ -81,24 +81,44 @@ app.get('/api/products/:id', async (req, res) => {
 
 app.post('/api/products', async (req, res, next) => {
   try {
+    let product = req.body;
+    const { notManufactured } = req.body;
+    if (notManufactured) {
+      product = {
+        ...req.body,
+        stock: -1,
+      };
+    }
     // Create a new product
-    const product = await Product.create(req.body);
+    const newProduct = await Product.create(product);
 
     // Send the product with its associated variants
-    const result = await Product.findByPk(product.id);
+    const result = await Product.findByPk(newProduct.id);
     res.json(result);
-  } catch (err) {
-    next(err);
+  } catch (error) {
+    next(error);
   }
 });
 
-app.put('/api/products/:id', async (req, res) => {
-  const product = await Product.findByPk(req.params.id);
-  if (product) {
-    await product.update(req.body);
-    res.json(product);
-  } else {
-    res.status(404).json({ message: 'Product not found' });
+app.put('/api/products/:id', async (req, res, next) => {
+  try {
+    let editedProduct = req.body;
+    const { notManufactured } = req.body;
+    if (notManufactured) {
+      editedProduct = {
+        ...req.body,
+        stock: -1,
+      };
+    }
+    const product = await Product.findByPk(req.params.id);
+    if (product) {
+      await product.update(editedProduct);
+      res.json(product);
+    } else {
+      res.status(404).json({ message: 'Product not found' });
+    }
+  } catch (error) {
+    next(error);
   }
 });
 

@@ -36,11 +36,27 @@ export default function EditProductForm({ product }: { product: Product }) {
       name: product?.name,
       description: product?.description,
       price: String(product?.price),
-      stock: String(product?.stock),
+      // @ts-expect-error stock type needs to be changed
+      stock: typeof product?.stock === 'number' ? String(product?.stock) : '0',
       color: {
+        // @ts-expect-error product response interface which extends Product needs to be created
         id: product?.colorId,
+        // @ts-expect-error product response interface which extends Product needs to be created
         value: product?.colorTitle,
       },
+      size: {
+        // @ts-expect-error product response interface which extends Product needs to be created
+        id: product?.sizeId,
+        // @ts-expect-error product response interface which extends Product needs to be created
+        value: product?.sizeTitle,
+      },
+      sleeves: {
+        // @ts-expect-error product response interface which extends Product needs to be created
+        id: product?.sleevesId,
+        // @ts-expect-error product response interface which extends Product needs to be created
+        value: product?.sleevesTitle,
+      },
+      notManufactured: true,
     },
     resolver: zodResolver(schema),
   });
@@ -49,7 +65,6 @@ export default function EditProductForm({ product }: { product: Product }) {
 
   const onSubmit = useCallback(
     async (data: Product) => {
-      console.log(data);
       const product = {
         ...data,
         id: id,
@@ -58,8 +73,7 @@ export default function EditProductForm({ product }: { product: Product }) {
         sleeves: data.sleeves.id,
       };
       try {
-        const productRes = await updateProduct(product).unwrap();
-        console.log(productRes);
+        await updateProduct(product).unwrap();
         // navigate to product list page
         navigate('/products');
       } catch (error) {
@@ -83,7 +97,7 @@ export default function EditProductForm({ product }: { product: Product }) {
         <div className='flex justify-between items-center'>
           <Title>Edit Product</Title>
           <Button
-            disabled={isLoading}
+            disabled={!methods.formState.isDirty || isLoading}
             type='submit'
             size='small'
             variant='contained'
@@ -104,7 +118,7 @@ export default function EditProductForm({ product }: { product: Product }) {
           </Paper>
         </div>
         <Paper className='p-2 md:[650px] lg:w-[550px]'>
-          <ProductInventory />
+          <ProductInventory stock={product.stock} />
         </Paper>
       </Box>
     </FormProvider>
