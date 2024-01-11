@@ -2,7 +2,7 @@
 
 ## How to run the app:
 
-1. Open a terminal window, navigate to the server folder, and run the following commands in order to install the necessary packages, start the server, and seed it with some initial values:
+1. Open a terminal window, navigate to the server folder, and run the following commands in order to install the necessary packages, start the server (# make sure that the server first starts to run and the database models have been created), and after that seed it with some initial values:
 
 ```bash
 cd server
