@@ -13,7 +13,7 @@ npm run start
 npm run seed
 ```
 
-2. Open another terminal window, navigate to the root folder, and run the following commands to install the necessary packages and start the development server:
+2. Open another terminal window, navigate to the root folder (cd ../), and run the following commands to install the necessary packages and start the development server:
 
 ```bash
 cd ..
