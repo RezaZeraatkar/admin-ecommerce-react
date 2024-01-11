@@ -13,7 +13,7 @@ export default function ProductInventory() {
       </div>
       <div className='flex gap-2 w-full'>
         <CTextField
-          name='stockQuantity'
+          name='stock'
           label='Stock quantity'
           id='outlined-size-small'
           defaultValue=''

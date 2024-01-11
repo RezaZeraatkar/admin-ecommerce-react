@@ -15,7 +15,7 @@ export default function ProductBasicInformation() {
             defaultValue=''
             size='small'
             className='w-2/3'
-            name='productName'
+            name='name'
           />
           <CTextField
             label='Price'
@@ -34,7 +34,7 @@ export default function ProductBasicInformation() {
           multiline
           rows={4}
           className='w-full'
-          name='productDescription'
+          name='description'
         />
       </div>
     </div>

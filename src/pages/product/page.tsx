@@ -14,27 +14,43 @@ import {
   ProductInventorySchema,
 } from '@/formSchemas';
 import DefaultSkeleton from '@/components/shared/DefaultSkeleton';
+import { useCreateProductMutation } from '@/store/api/api';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const ProductAttributes = lazy(
   () => import('@/components/forms/ProductAttributes')
 );
 
-export default function Product() {
-  const schema = z.object({
-    ...ProductBasicInformationSchema.shape,
-    ...ProductAttributesSchema.shape,
-    ...ProductInventorySchema.shape,
-  });
+const schema = z.object({
+  ...ProductBasicInformationSchema.shape,
+  ...ProductAttributesSchema.shape,
+  ...ProductInventorySchema.shape,
+});
 
+export default function Product() {
   const methods = useForm({
     resolver: zodResolver(schema),
   });
 
-  const onSubmit = useCallback((data) => {
-    console.log(data);
-  }, []);
+  const [createProduct, { isLoading }] = useCreateProductMutation();
 
-  // console.log(methods.formState.errors);
+  const onSubmit = useCallback(
+    async (data) => {
+      const product = {
+        ...data,
+        color: data.color.id,
+        size: data.size.id,
+        sleeves: data.sleeves.id,
+      };
+      try {
+        const productRes = await createProduct(product).unwrap();
+        console.log(productRes);
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    [createProduct]
+  );
 
   return (
     <FormProvider {...methods}>
@@ -45,8 +61,13 @@ export default function Product() {
       >
         <div className='flex justify-between items-center'>
           <Title>Add/Edit Product</Title>
-          <Button type='submit' variant='contained' size='small'>
-            Add new product
+          <Button
+            disabled={isLoading}
+            type='submit'
+            variant='contained'
+            size='small'
+          >
+            {isLoading ? <CircularProgress size='small' /> : 'Add new product'}
           </Button>
         </div>
         <div className='flex flex-col lg:flex-row gap-4 w-full'>

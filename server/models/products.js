@@ -1,16 +1,23 @@
-import { Model, DataTypes } from 'sequelize';
+import { DataTypes } from 'sequelize';
 import sequelize from '../db/index.js';
 
-class Product extends Model {}
-
-if (!sequelize.isDefined('Product'))
-  Product.init(
-    {
-      name: DataTypes.STRING,
-      price: DataTypes.STRING,
-      description: DataTypes.STRING,
+const Product = sequelize.define(
+  'Product',
+  {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
     },
-    { sequelize, modelName: 'product' }
-  );
+    name: DataTypes.STRING,
+    description: DataTypes.TEXT,
+    price: DataTypes.DECIMAL,
+    color: DataTypes.INTEGER,
+    size: DataTypes.INTEGER,
+    sleeves: DataTypes.INTEGER,
+    stock: DataTypes.INTEGER,
+  },
+  { timestamps: true }
+);
 
 export default Product;

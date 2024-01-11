@@ -17,7 +17,25 @@ export const AppApi = createApi({
     getAllProducts: builder.query({
       query: () => 'products',
       providesTags: ['Product'],
+      transformResponse: (response) => {
+        const transformed = response.map((product) => {
+          return {
+            id: product.id,
+            name: product.name,
+            description: product.description,
+            price: product.price,
+            color: product.color,
+            size: product.size,
+            sleeves: product.sleeves,
+            stock: product.stock === -1 ? 'Not-Manufactured' : product.stock,
+          };
+        });
+
+        // Flatten the array
+        return transformed.flat() as Product[];
+      },
     }),
+
     getProductById: builder.query({
       query: (id) => `products/${id}`,
       providesTags: ['Product'],
@@ -58,13 +76,11 @@ export const AppApi = createApi({
           }
           acc[attribute.type].push({
             id: attribute.id,
-            value: attribute.value,
+            value: attribute.title,
           });
           return acc;
         }, {});
-
-        transformed.models = Object.keys(transformed);
-        return transformed as Attributes;
+        return transformed;
       },
     }),
     getAttributeById: builder.query({

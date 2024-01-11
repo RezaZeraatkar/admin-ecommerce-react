@@ -3,24 +3,14 @@ type AttributeValue = {
   value: string;
 };
 
-type Variant = {
-  color: AttributeValue;
-  size: AttributeValue;
-  sleeves: AttributeValue;
-  stock: number | 'Not-Manufactured';
-};
-
-type Attributes = {
-  size: AttributeValue[];
-  colors: AttributeValue[];
-  sleeves: AttributeValue[];
-  models: string[];
-};
+type Attributes = AttributeValue[];
 
 type Product = {
-  id: number;
   name: string;
   price: string;
-  description?: string;
-  variants: Variant[];
+  description: string;
+  colorId: number;
+  sizeId: number;
+  sleevesId: number;
+  stock: number | 'Not-Manufactured';
 };

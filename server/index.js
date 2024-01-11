@@ -1,8 +1,7 @@
 import express from 'express';
 import cors from 'cors';
-import Product from './models/products.js';
-import Variant from './models/variants.js';
 import Attribute from './models/attributes.js';
+import Product from './models/products.js';
 import sequelize from './db/index.js';
 
 const app = express();
@@ -20,67 +19,53 @@ app.use(express.urlencoded({ extended: true })); // parses requests of applicati
 
 // CRUD routes for Product model
 app.get('/api/products', async (req, res) => {
-  const products = await Product.findAll({ include: Variant });
-  res.json(products);
+  try {
+    const products = await sequelize.query(
+      `SELECT Products.id, Products.name, Products.description, Products.price, Products.stock,
+      color.title AS color, size.title AS size, sleeves.title AS sleeves
+      FROM Products
+      LEFT OUTER JOIN Attributes AS color ON Products.color = color.id
+      LEFT OUTER JOIN Attributes AS size ON Products.size = size.id
+      LEFT OUTER JOIN Attributes AS sleeves ON Products.sleeves = sleeves.id
+      ORDER BY Products.updatedAt DESC
+      `,
+      { type: sequelize.QueryTypes.SELECT }
+    );
+
+    if (!products || products.length === 0) {
+      return res.status(404).json({ message: 'No products found' });
+    }
+
+    const response = products.map((product) => ({
+      id: product.id,
+      name: product.name,
+      description: product.description,
+      price: product.price,
+      color: product.color,
+      size: product.size,
+      sleeves: product.sleeves,
+      stock: product.stock,
+    }));
+
+    res.json(response);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
 });
 
 app.get('/api/products/:id', async (req, res) => {
-  const product = await Product.findByPk(req.params.id, { include: Variant });
+  const product = await Product.findByPk(req.params.id);
   res.json(product);
 });
 
 app.post('/api/products', async (req, res, next) => {
   try {
-    const {
-      productName,
-      price,
-      productDescription,
-      colors,
-      Size,
-      Sleeves,
-      notManufactured,
-      stockQuantity,
-    } = req.body;
-
     // Create a new product
-    const product = await Product.create({
-      name: productName,
-      price: price,
-      description: productDescription,
-    });
-
-    // Create associated variants for colors
-    const colorVariants = colors.map((color) => {
-      return Variant.create({
-        colorId: color.id,
-        productId: product.id,
-        stock: stockQuantity,
-      });
-    });
-
-    // Create associated variants for sizes
-    const sizeVariants = Size.map((size) => {
-      return Variant.create({
-        sizeId: size.id,
-        productId: product.id,
-        stock: stockQuantity,
-      });
-    });
-
-    // Create associated variants for sleeves
-    const sleeveVariants = Sleeves.map((sleeve) => {
-      return Variant.create({
-        sleevesId: sleeve.id,
-        productId: product.id,
-        stock: notManufactured ? 0 : stockQuantity,
-      });
-    });
-
-    // Wait for all variants to be created
-    await Promise.all([...colorVariants, ...sizeVariants, ...sleeveVariants]);
+    const product = await Product.create(req.body);
 
     // Send the product with its associated variants
-    const result = await Product.findByPk(product.id, { include: Variant });
+    const result = await Product.findByPk(product.id);
     res.json(result);
   } catch (err) {
     next(err);
