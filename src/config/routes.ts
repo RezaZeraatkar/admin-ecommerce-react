@@ -11,7 +11,7 @@ export const routes = [
     permissions: [],
   },
   {
-    title: 'product',
+    title: 'add product',
     address: '/product/add',
     icon: React.createElement(MailIcon),
     roles: [],
