@@ -102,6 +102,10 @@
   position: fixed
 }
 
+#root :is(.m-auto) {
+  margin: auto
+}
+
 #root :is(.my-4) {
   margin-top: 1rem;
   margin-bottom: 1rem
@@ -113,6 +117,10 @@
 
 #root :is(.h-\[500px\]) {
   height: 500px
+}
+
+#root :is(.h-screen) {
+  height: 100vh
 }
 
 #root :is(.min-h-screen) {
@@ -131,16 +139,16 @@
   width: 100%
 }
 
-#root :is(.transform) {
-  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))
-}
-
 #root :is(.flex-col) {
   flex-direction: column
 }
 
 #root :is(.items-center) {
   align-items: center
+}
+
+#root :is(.justify-center) {
+  justify-content: center
 }
 
 #root :is(.justify-between) {
@@ -157,6 +165,10 @@
 
 #root :is(.gap-4) {
   gap: 1rem
+}
+
+#root :is(.rounded) {
+  border-radius: 0.25rem
 }
 
 #root :is(.bg-gray-50) {
@@ -181,14 +193,12 @@
   padding: 1rem
 }
 
-#root :is(.px-4) {
-  padding-left: 1rem;
-  padding-right: 1rem
+#root :is(.text-center) {
+  text-align: center
 }
 
-#root :is(.py-6) {
-  padding-top: 1.5rem;
-  padding-bottom: 1.5rem
+#root :is(.font-bold) {
+  font-weight: 700
 }
 
 #root :is(.text-white) {

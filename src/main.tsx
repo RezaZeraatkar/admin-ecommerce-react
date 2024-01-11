@@ -24,9 +24,10 @@ import '@fontsource/roboto/700.css';
 import RootLayout from '@/pages/layout';
 import Product from '@/pages/product/page';
 import ProductsList from '@/pages/products-list/page';
-import Feature from '@/pages/feature/page';
 import EditProduct from './pages/editProduct/page';
+import Dashboard from './pages/dashboard/page';
 
+// redux store
 import store from '@/store';
 
 const cache = createCache({
@@ -41,6 +42,10 @@ const router = createBrowserRouter([
     element: <RootLayout />,
     children: [
       {
+        path: '/',
+        element: <Dashboard />,
+      },
+      {
         path: 'products',
         element: <ProductsList />,
       },
@@ -51,10 +56,6 @@ const router = createBrowserRouter([
       {
         path: 'product/edit/:id',
         element: <EditProduct />,
-      },
-      {
-        path: 'feature/:action/:fid?',
-        element: <Feature />,
       },
     ],
   },

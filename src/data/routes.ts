@@ -17,18 +17,4 @@ export const routes = [
     roles: [],
     permissions: [],
   },
-  {
-    title: 'features list',
-    address: '/features',
-    icon: React.createElement(MailIcon),
-    roles: [],
-    permissions: [],
-  },
-  {
-    title: 'feature',
-    address: '/feature/add',
-    icon: React.createElement(MailIcon),
-    roles: [],
-    permissions: [],
-  },
 ];

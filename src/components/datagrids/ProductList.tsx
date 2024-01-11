@@ -69,17 +69,17 @@ export default function ProductListDataGrid() {
 
   const columns: GridColDef[] = useMemo(
     () => [
-      { field: 'name', headerName: 'Product Name', width: 250 },
+      { field: 'name', headerName: 'Product Name', width: 200 },
       { field: 'price', headerName: 'Price', width: 100 },
       { field: 'color', headerName: 'Color', width: 100 },
       { field: 'size', headerName: 'Size', width: 100 },
       { field: 'sleeves', headerName: 'Sleeves', width: 150 },
-      { field: 'stock', headerName: 'Stock', width: 100 },
+      { field: 'stock', headerName: 'Stock', width: 200 },
       {
         field: 'actions',
         headerName: 'Actions',
         sortable: false,
-        width: 200,
+        width: 100,
         renderCell: (params: GridRenderCellParams) => {
           return (
             <div>
