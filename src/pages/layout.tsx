@@ -6,6 +6,7 @@ import { RootState } from '@/store';
 import { handleSidebarShow } from '@/store/slices/sidebar';
 import DashboardAppBar from '@/components/appbar/DashboardAppBar';
 import DashboardDrawer from '@/components/appbar/DashboardDrawer';
+import { ToastContainer } from 'react-toastify';
 
 const drawerWidth = 240;
 
@@ -68,6 +69,7 @@ export default function RootLayout() {
           <Outlet />
         </div>
       </Main>
+      <ToastContainer />
     </div>
   );
 }

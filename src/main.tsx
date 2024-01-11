@@ -4,6 +4,7 @@ import { StyledEngineProvider } from '@mui/material/styles';
 import { CacheProvider } from '@emotion/react';
 import createCache from '@emotion/cache';
 import { Provider } from 'react-redux';
+import 'react-toastify/dist/ReactToastify.css';
 
 // router dom
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';

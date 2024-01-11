@@ -12,6 +12,7 @@ const DialogBox = memo(function DialogBox({
   onChangeHandler,
   dialogContentText,
   dialogContentTitle,
+  deleting,
 }: any) {
   return (
     <Dialog
@@ -30,7 +31,13 @@ const DialogBox = memo(function DialogBox({
       </DialogContent>
       <DialogActions>
         <Button onClick={() => onCloseHandler(false)}>خیر</Button>
-        <Button variant='contained' onClick={onChangeHandler} autoFocus>
+        <Button
+          disabled={deleting}
+          className='disabled:bg-gray-300'
+          variant='contained'
+          onClick={onChangeHandler}
+          autoFocus
+        >
           بله
         </Button>
       </DialogActions>

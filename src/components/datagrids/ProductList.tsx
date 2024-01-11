@@ -15,11 +15,12 @@ import {
 import { Link } from 'react-router-dom';
 import { Typography } from '@mui/material';
 import DialogBox from '../shared/DialogBox';
+import { toast } from 'react-toastify';
 
 export default function ProductListDataGrid() {
   const [openDeleteDialog, setDeleteDialog] = useState(false);
 
-  const [removedItemId, setRemovedItemId] = useState(null);
+  const [removedItemId, setRemovedItemId] = useState<number | null>(null);
   const {
     data: products,
     isLoading,
@@ -28,10 +29,9 @@ export default function ProductListDataGrid() {
     isError,
     error,
   } = useGetAllProductsQuery({});
-  const [deleteProduct, { isLoading: productIsLoading }] =
-    useDeleteProductMutation();
+  const [deleteProduct, { isLoading: deleting }] = useDeleteProductMutation();
 
-  const handleDeleteClick = useCallback(async (id) => {
+  const handleDeleteClick = useCallback(async (id: number) => {
     setDeleteDialog(true);
     setRemovedItemId(id);
   }, []);
@@ -46,7 +46,12 @@ export default function ProductListDataGrid() {
   // handline errors here
   useEffect(() => {
     if (isError) {
-      console.log(error);
+      // @ts-expect-error error data structure is unkown
+      console.log(error?.error);
+      // @ts-expect-error error data structure is unkown
+      toast.error(error?.data?.message || error?.error, {
+        position: 'top-right',
+      });
     }
   }, [isError, error]);
 
@@ -59,11 +64,12 @@ export default function ProductListDataGrid() {
     setDeleteDialog(false);
     try {
       const deletedItem = await deleteProduct(id).unwrap();
-      // toast.success(deletedItem.message, { position: 'top-right' });
-      console.log(deletedItem);
+      toast.success(deletedItem.message, { position: 'top-right' });
     } catch (error) {
       console.error(error);
-      // handleServerErrors(error);
+      toast.error(error?.data?.message || error?.error, {
+        position: 'top-right',
+      });
     }
   }, [deleteProduct, removedItemId]);
 
@@ -127,6 +133,7 @@ export default function ProductListDataGrid() {
         onCloseHandler={handleDeleteDialogClose}
         onChangeHandler={handleItemDeleteAction}
         dialogContentText={'Are you sure to delete this file?'}
+        isLoading={deleting}
       />
     </>
   );
