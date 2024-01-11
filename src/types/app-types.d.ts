@@ -6,11 +6,12 @@ type AttributeValue = {
 type Attributes = AttributeValue[];
 
 type Product = {
+  id: number;
   name: string;
   price: string;
   description: string;
-  colorId: number;
-  sizeId: number;
-  sleevesId: number;
+  color: AttributeValue;
+  size: AttributeValue;
+  sleeves: AttributeValue;
   stock: number | 'Not-Manufactured';
 };

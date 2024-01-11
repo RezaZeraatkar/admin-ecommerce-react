@@ -16,7 +16,7 @@ export default function ProductInventory() {
           name='stock'
           label='Stock quantity'
           id='outlined-size-small'
-          defaultValue=''
+          defaultValue={''}
           size='small'
           className='w-2/3'
         />

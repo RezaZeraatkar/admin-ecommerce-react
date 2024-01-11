@@ -55,8 +55,28 @@ app.get('/api/products', async (req, res) => {
 });
 
 app.get('/api/products/:id', async (req, res) => {
-  const product = await Product.findByPk(req.params.id);
-  res.json(product);
+  const pid = req.params.id;
+  try {
+    const product = await sequelize.query(
+      `SELECT Products.name, Products.description, Products.price, Products.stock,
+      color.title AS colorTitle, color.id as colorId, size.title AS sizeTitle, size.id as sizeId, sleeves.title AS sleevesTitle, sleeves.id as sleevesId
+      FROM Products
+      LEFT OUTER JOIN Attributes AS color ON Products.color = color.id
+      LEFT OUTER JOIN Attributes AS size ON Products.size = size.id
+      LEFT OUTER JOIN Attributes AS sleeves ON Products.sleeves = sleeves.id
+      WHERE Products.id = ${pid}`,
+      { type: sequelize.QueryTypes.SELECT }
+    );
+
+    if (!product) {
+      return res.status(404).json({ message: 'Product not found' });
+    }
+
+    res.json(product[0]);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
 });
 
 app.post('/api/products', async (req, res, next) => {

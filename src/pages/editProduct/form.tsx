@@ -1,4 +1,4 @@
-import { Suspense, lazy, useCallback, useEffect } from 'react';
+import { Suspense, lazy, useCallback } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -14,12 +14,8 @@ import {
   ProductInventorySchema,
 } from '@/formSchemas';
 import DefaultSkeleton from '@/components/shared/DefaultSkeleton';
-import {
-  useCreateProductMutation,
-  useGetProductByIdQuery,
-} from '@/store/api/api';
+import { useCreateProductMutation } from '@/store/api/api';
 import CircularProgress from '@mui/material/CircularProgress';
-import { useParams } from 'react-router-dom';
 
 const ProductAttributes = lazy(
   () => import('@/components/forms/ProductAttributes')
@@ -31,21 +27,20 @@ const schema = z.object({
   ...ProductInventorySchema.shape,
 });
 
-export default function Product() {
-  const { pid } = useParams();
-
+export default function EditProductForm({ product }: { product: Product }) {
   const methods = useForm<Product>({
+    defaultValues: {
+      name: product?.name,
+      description: product?.description,
+      price: product?.price,
+      stock: product?.stock,
+      color: {
+        id: product?.colorId,
+        value: product?.colorTitle,
+      },
+    },
     resolver: zodResolver(schema),
   });
-
-  const {
-    data: product,
-    isSuccess: productSuccess,
-    isLoading: productLoading,
-    isError: ProductIsError,
-    error: productError,
-    isFetching: productIsFetching,
-  } = useGetProductByIdQuery(pid);
 
   const [createProduct, { isLoading }] = useCreateProductMutation();
 
@@ -67,20 +62,6 @@ export default function Product() {
     [createProduct]
   );
 
-  useEffect(() => {
-    if (productSuccess) {
-      console.log(product);
-    }
-  }, [productSuccess, product]);
-
-  useEffect(() => {
-    if (ProductIsError) {
-      console.log(productError);
-    }
-  }, [ProductIsError, productError]);
-
-  if (productLoading || productIsFetching) return <>loading...</>;
-
   return (
     <FormProvider {...methods}>
       <Box
@@ -89,18 +70,14 @@ export default function Product() {
         onSubmit={methods.handleSubmit(onSubmit)}
       >
         <div className='flex justify-between items-center'>
-          <Title>{pid ? 'Edit' : 'Add'} Product</Title>
+          <Title>Edit Product</Title>
           <Button
             disabled={isLoading}
             type='submit'
             variant='contained'
             size='small'
           >
-            {isLoading ? (
-              <CircularProgress size='small' />
-            ) : (
-              `${pid ? 'Edit' : 'Add'} product`
-            )}
+            {isLoading ? <CircularProgress size='small' /> : `Edit product`}
           </Button>
         </div>
         <div className='flex flex-col lg:flex-row gap-4 w-full'>
@@ -109,7 +86,7 @@ export default function Product() {
           </Paper>
           <Paper className='p-2 md:[650px] lg:w-[550px]'>
             <Suspense fallback={<DefaultSkeleton />}>
-              <ProductAttributes product={product} />
+              <ProductAttributes />
             </Suspense>
           </Paper>
         </div>

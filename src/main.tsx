@@ -25,7 +25,8 @@ import RootLayout from '@/pages/layout';
 import Product from '@/pages/product/page';
 import ProductsList from '@/pages/products-list/page';
 import Feature from '@/pages/feature/page';
-import FeaturesList from '@/pages/features-list/page';
+import EditProduct from './pages/editProduct/page';
+
 import store from '@/store';
 
 const cache = createCache({
@@ -44,12 +45,12 @@ const router = createBrowserRouter([
         element: <ProductsList />,
       },
       {
-        path: 'product/:action/:pid?',
+        path: 'product/add',
         element: <Product />,
       },
       {
-        path: 'features',
-        element: <FeaturesList />,
+        path: 'product/edit/:id',
+        element: <EditProduct />,
       },
       {
         path: 'feature/:action/:fid?',

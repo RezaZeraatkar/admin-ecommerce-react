@@ -23,7 +23,7 @@ async function seed() {
   const products = [
     {
       name: 'T-Shirt',
-      price: '20$',
+      price: '20',
       description: 'lorem ipsum ...',
       color: 5,
       size: 1,
@@ -32,7 +32,7 @@ async function seed() {
     },
     {
       name: 'Hoodie',
-      price: '50$',
+      price: '50',
       description: 'lorem ipsum ...',
       color: 6,
       size: 2,
