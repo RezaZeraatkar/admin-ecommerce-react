@@ -12,7 +12,7 @@ const sidebarSlice = createSlice({
   name: 'sidebarshow',
   initialState,
   reducers: {
-    handleSidebarShow: (state, action: PayloadAction) => {
+    handleSidebarShow: (state, action: PayloadAction<boolean>) => {
       state.show = action.payload;
     },
   },
